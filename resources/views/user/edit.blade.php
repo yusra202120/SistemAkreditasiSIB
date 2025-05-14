@@ -6,13 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">User</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Tambah User</li>
-                    </ol>
+                    <h1 class="m-0">Edit User</h1>
                 </div>
             </div>
         </div>
@@ -20,44 +14,61 @@
 
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('user.update', ['id' => $data->id]) }}" method="POST">
+            <form action="{{ route('user.update', $data->user_id) }}" method="POST">
                 @csrf
                 @method('PUT')
+
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Form Edit User</h3>
                             </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" value="{{ $data->email }}"     placeholder="Enter email">
-                                    @error('email')
-                                    <small>{{$message}}</small>                  
-                                    @enderror
-                                
-                                </div>
+
+                            <div class="card-body p-4">
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
-                                    <input type="text" name="nama" class="form-control" id="nama"  value="{{ $data->name }}" placeholder="Enter name">
-                                    @error('email')
-<small class="text-danger">{{ $message }}</small>
-@enderror
-
+                                    <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama', $data->nama) }}">
+                                    @error('nama')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-                                    @error('email')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
 
-                                
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" name="username" class="form-control" id="username" value="{{ old('username', $data->username) }}">
+                                    @error('username')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select name="role" id="role" class="form-control">
+                                        <option value="">-- Pilih Role --</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->level_id }}" {{ old('role', $data->level_id) == $role->level_id ? 'selected' : '' }}>
+                                                {{ $role->role }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password (kosongkan jika tidak ingin ubah)</label>
+                                    <input type="password" name="password" class="form-control" id="password">
+                                    @error('password')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
+                                <a href="{{ route('user.index') }}" class="btn btn-secondary">Kembali</a>
                             </div>
                         </div>
                     </div>

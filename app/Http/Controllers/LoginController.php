@@ -70,4 +70,10 @@ class LoginController extends Controller
     
         return redirect()->route('login')->with('failed', 'Register berhasil, tapi login gagal');
     }
+
+        public function username()
+        {
+        return 'username';
+        }
+
 }

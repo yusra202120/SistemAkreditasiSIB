@@ -23,35 +23,49 @@
             <form action="{{ route('user.store') }}" method="POST">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Form Tambah User</h3>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
-                                    @error('email')
-                                    <small>{{$message}}</small>                  
-                                    @enderror
-                                
-                                </div>
-                                <div class="form-group">
                                     <label for="nama">Nama</label>
-                                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Enter name">
+                                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan nama" value="{{ old('nama') }}">
                                     @error('nama')
-                                    <small>{{$message}}</small>                  
+                                    <small class="text-danger">{{ $message }}</small>
                                     @enderror
-                                
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" name="username" class="form-control" id="username" placeholder="Masukkan username" value="{{ old('username') }}">
+                                    @error('username')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select name="role" id="role" class="form-control">
+                                        <option value="">-- Pilih Role --</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->level_id }}" {{ old('role') == $role->level_id ? 'selected' : '' }}>
+                                                {{ $role->role }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                                    <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan password">
                                     @error('password')
-                                    <small>{{$message}}</small>                  
+                                    <small class="text-danger">{{ $message }}</small>
                                     @enderror
-                                
                                 </div>
                             </div>
                             <div class="card-footer">
